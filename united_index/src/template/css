@@ -1,0 +1,225 @@
+.pdf-page {
+  width: 180mm;
+  min-height: 260mm;
+  margin: auto;
+  background: white;
+  box-sizing: border-box;
+  border: 2px solid gray;
+  padding: 0mm 20mm 20mm 20mm;
+position: relative;
+  /* DOUBLE BORDER */
+  outline: 2px double black;
+  outline-offset: -30px; /* Adjusted for proper print */
+
+  /* Print safe */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+
+  text-align: center;
+  font-family: "Times New Roman", serif;
+  overflow: hidden;
+  page-break-inside: avoid;
+  position: relative;
+}
+
+/* Print specific */
+@media print {
+  body, html {
+    margin: 0;
+    padding: 0;
+  }
+
+  .pdf-page {
+    width: 100%;
+    min-height: 100%;
+    border: 2px solid gray;
+    /* outline: 6px double black; */
+    outline-offset: -35px; /* Print-friendly offset */
+    box-sizing: border-box;
+    page-break-inside: avoid;
+  }
+
+  .logo-container, .affiliated-logo-container {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* =========================================================
+   COLLEGE LOGO (Top Without Any Gap)
+========================================================= */
+.logo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  /* padding-top: 20px; */
+}
+
+.college-logo {
+  width: 260px;
+  height: auto;
+  object-fit: contain;
+  margin-top: 0; /* Ensure logo at top */
+}
+
+/* =========================================================
+   GENERAL TEXT STYLING
+========================================================= */
+.line {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 6px 0;
+}
+
+.main-title {
+  font-size: 30px;
+  margin: 12px 0;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.sub-heading {
+  font-size: 28px;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+/* =========================================================
+   AFFILIATED UNIVERSITY LOGO
+========================================================= */
+.affiliated-logo-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.affiliated-logo {
+  width: 160px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* =========================================================
+   FULL WIDTH TEXT LINES
+========================================================= */
+.college-full {
+  width: 100%;
+  display: block;
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 10px 0;
+}
+
+.affiliated-full {
+  width: 100%;
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+/* =========================================================
+   REMOVE DEFAULT SPACING
+========================================================= */
+h1, h2, h3, p {
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================================================
+   PRINT SPECIFIC STYLING
+========================================================= */
+@media print {
+  body, html {
+    margin: 0;
+    padding: 0;
+  }
+
+  .pdf-page {
+    width: 100%;
+    min-height: 100%;
+    border: 2px solid gray;
+    outline: 6px double black;
+    outline-offset: -35px;
+    box-sizing: border-box;
+    page-break-inside: avoid;
+  }
+
+  .logo-container, .affiliated-logo-container {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+
+.pdf-page {
+  position: relative;
+  width: 210mm;
+  min-height: 297mm;
+  margin: auto;
+  background: white;
+  box-sizing: border-box;
+  /* border: 2px solid gray; */
+  padding: 0mm 20mm 20mm 20mm;
+
+  /* Double border using inner div or pseudo-element */
+}
+
+.pdf-page::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  /* border: 6px double black; */
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.pdf-page {
+  position: relative;
+  width: 210mm;
+  min-height: 297mm;
+  margin: auto;
+  background: white;
+  box-sizing: border-box;
+  padding: 0mm 20mm 20mm 20mm;
+}
+
+/* DOUBLE BORDER USING PSEUDO-ELEMENT */
+.pdf-page::before {
+  content: "";
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  border: 6px double black; /* or outline */
+  pointer-events: none;
+  box-sizing: border-box;
+  z-index: 1; /* keeps border above background but below content */
+}
+
+/* CONTENT ABOVE BORDER */
+.pdf-page > * {
+  position: relative;
+  z-index: 2; /* ensures logo and all content are in front */
+}
+
+/* LOGO SPECIFIC */
+.logo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.college-logo {
+  width: 260px;
+  height: auto;
+  object-fit: contain;
+}

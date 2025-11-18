@@ -1,0 +1,127 @@
+/* ================= PDF PAGE WRAPPER ================= */
+.pdf-page {
+  position: relative;
+  width: 210mm;
+  min-height: 297mm; /* full A4 */
+  margin: auto;
+  background: white;
+  box-sizing: border-box;
+  padding: 0; /* padding inside double-border */
+  text-align: center;
+  font-family: "Times New Roman", serif;
+  overflow: hidden;
+  page-break-inside: avoid;
+}
+
+/* ================= INNER DIV WITH DOUBLE BORDER ================= */
+.double-border {
+  position: relative;
+  width: 100%;
+  min-height: 297mm; /* full page height */
+  padding: 0 20mm; /* top/bottom/left/right padding inside border */
+
+  border: 2px double black;        /* inner border */
+
+
+  box-sizing: border-box;
+}
+
+/* ================= PRINT SPECIFIC ================= */
+@media print {
+  @page {
+    margin: 0; /* remove browser default margin */
+    size: A4 portrait;
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+  }
+
+  .pdf-page, .double-border {
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    page-break-inside: avoid;
+  }
+
+  .logo-container, .affiliated-logo-container {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* ================= COLLEGE LOGO ================= */
+.logo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.college-logo {
+  width: 300px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ================= GENERAL TEXT STYLING ================= */
+.line {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 6px 0;
+}
+
+.main-title {
+  font-size: 30px;
+  margin: 12px 0;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.sub-heading {
+  font-size: 28px;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+/* ================= AFFILIATED UNIVERSITY LOGO ================= */
+.affiliated-logo-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.affiliated-logo {
+  width: 160px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ================= FULL WIDTH TEXT LINES ================= */
+.college-full {
+  width: 100%;
+  display: block;
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 10px 0;
+}
+
+.affiliated-full {
+  width: 100%;
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+/* ================= REMOVE DEFAULT SPACING ================= */
+h1, h2, h3, p {
+  margin: 0;
+  padding: 0;
+}
+
