@@ -134,7 +134,7 @@ export default function FormUI() {
               className="w-full md:w-2/3 border border-gray-300 rounded-md p-2"
             >
               <option value="">Select Affiliation</option>
-              <option value="Rajju Bhaiya University, Prayagraj">Rajju Bhaiya University</option>
+              <option value="Prof. Rajendra Singh (Rajju Bhaiya) University, Prayagraj">Prof. Rajendra Singh (Rajju Bhaiya) University, Prayagraj</option>
               <option value="Dr. A.P.J. Abdul Kalam Technical University (APJAKTU) LUCKNOW">
                 Dr. A.P.J. Abdul Kalam Technical University (APJAKTU) LUCKNOW
               </option>
