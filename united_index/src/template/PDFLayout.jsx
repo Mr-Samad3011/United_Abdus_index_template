@@ -6,6 +6,7 @@ export default function PDFLayout({ data }) {
   const universityLogos = {
     "Rajju Bhaiya University, Prayagraj": "/rajju_bhayya.png",
     "Dr. A.P.J. Abdul Kalam Technical University (APJAKTU) LUCKNOW": "/uptu_logo.png",
+    "Board of Technical Education Uttar Pradesh Lucknow":"/bte_board.jpeg"
   };
 
   const affiliatedLogo = universityLogos[data.affiliatedBy] || "";

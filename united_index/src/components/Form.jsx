@@ -398,6 +398,8 @@ export default function FormUI() {
               <option value="United Institute of Management">United Institute of Management</option>
               <option value="United Institute of Pharmacy">United Institute of Pharmacy</option>
               <option value="United College of Engineering & Research">United College of Engineering & Research</option>
+              <option value="United Institute of Technology">United Institute of Technology</option>
+              
             </select>
           </div>
 
@@ -414,6 +416,7 @@ export default function FormUI() {
               <option value="Dr. A.P.J. Abdul Kalam Technical University (APJAKTU) LUCKNOW">
                 Dr. A.P.J. Abdul Kalam Technical University (APJAKTU) LUCKNOW
               </option>
+              <option value="Board of Technical Education Uttar Pradesh Lucknow">Board of Technical Education Uttar Pradesh Lucknow</option>
             </select>
           </div>
 
