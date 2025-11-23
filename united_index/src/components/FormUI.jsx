@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Form.css";
+import PDFLayout from "../template/PDFLayout";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export default function FormUI() {
   const [form, setForm] = useState({
@@ -14,12 +17,13 @@ export default function FormUI() {
     affiliatedBy: "",
     rollNo: "",
     studentId: "",
-    semester: "",
     internalExam: false,
-    externalExam: false,
+  externalExam: false,
   });
 
+  // eslint-disable-next-line no-unused-vars
   const [errors, setErrors] = useState({});
+  const [showPDF, setShowPDF] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("studentForm");
@@ -30,34 +34,50 @@ export default function FormUI() {
     localStorage.setItem("studentForm", JSON.stringify(form));
   }, [form]);
 
-  const handleChange = (e) => {
+  function handleChange(e) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
-  };
+  }
 
-  const validateForm = () => {
+  function validateForm() {
     const newErrors = {};
     if (!form.studentName.trim()) newErrors.studentName = "Name is required";
     if (!form.studentId.trim()) newErrors.studentId = "Student ID is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (validateForm()) setShowPDF(true);
+    else alert("❌ Please fill required fields");
+  }
+
+  const generatePDF = async () => {
+    const element = document.getElementById("pdf-content");
+    if (!element) return alert("PDF layout not found!");
+
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      scrollY: -window.scrollY,
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const margin = 5;
+    const imgWidth = pdfWidth - margin * 2;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const positionY = imgHeight < pdfHeight ? (pdfHeight - imgHeight) / 2 : 0;
+
+    pdf.addImage(imgData, "PNG", margin, positionY, imgWidth, imgHeight);
+    pdf.save(`${form.studentName || "student"}_lab_manual.pdf`);
   };
 
-  // ✅ PREVIEW BUTTON WORKING
-  const openPreviewInNewTab = () => {
-    if (!validateForm()) {
-      alert("❌ Please fill required fields");
-      return;
-    }
-
-    // Save preview data
-    localStorage.setItem("previewData", JSON.stringify(form));
-
-    // Open preview page
-    window.open("/preview", "_blank");
-  };
-
-  const resetForm = () => {
+  function resetForm() {
     localStorage.removeItem("studentForm");
     setForm({
       studentName: "",
@@ -71,24 +91,21 @@ export default function FormUI() {
       affiliatedBy: "",
       rollNo: "",
       studentId: "",
-      semester: "",
-      internalExam: false,
-      externalExam: false,
     });
-    setErrors({});
-  };
+    setShowPDF(false);
+  }
 
   const isFormIncomplete = !form.studentName || !form.studentId;
 
   return (
     <div className="form-index mt-6 px-4 md:px-10 lg:px-20">
       <h1 className="text-3xl md:text-5xl font-bold text-center text-blue-700 mb-8 md:mb-12">
-        📘 Student Information Form
-      </h1>
+    📘 Student Information Form
+  </h1>
 
       <div className="Form-Page bg-white shadow-xl rounded-3xl p-6 md:p-10 border border-gray-200">
-        <form className="space-y-6 md:space-y-8">
-           {/* --- INSTITUTE DETAILS --- */}
+        <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
+          {/* --- INSTITUTE DETAILS --- */}
           <h3 className="section-title text-lg md:text-2xl font-semibold">🏫 Institute Details</h3>
           <div className="Field flex flex-col md:flex-row md:gap-6">
             <label className="w-full md:w-1/3">Select College</label>
@@ -108,7 +125,7 @@ export default function FormUI() {
             </select>
           </div>
 
-           <div className="Field flex flex-col md:flex-row md:gap-6">
+          <div className="Field flex flex-col md:flex-row md:gap-6">
             <label className="w-full md:w-1/3">Affiliated By</label>
             <select
               name="affiliatedBy"
@@ -125,11 +142,10 @@ export default function FormUI() {
             </select>
           </div>
 
-
           {/* --- STUDENT DETAILS --- */}
           <h3 className="section-title text-lg md:text-2xl font-semibold mt-4 md:mt-8">👨‍🎓 Student Information</h3>
           <div className="Field flex flex-col md:flex-row md:gap-6">
-            <label className="w-full md:w-1/3">Student Name</label>
+            <label className="w-full md:w-1/3">Name</label>
             <input
               type="text"
               name="studentName"
@@ -164,9 +180,7 @@ export default function FormUI() {
             />
           </div>
 
-         
-
-           {/* --- COURSE & SUBJECT --- */}
+          {/* --- COURSE & SUBJECT --- */}
           <h3 className="section-title text-lg md:text-2xl font-semibold mt-4 md:mt-8">📚 Course & Subject</h3>
           <div className="Field flex flex-col md:flex-row md:gap-6">
             <label className="w-full md:w-1/3">Course Name</label>
@@ -227,29 +241,7 @@ export default function FormUI() {
             />
           </div>
 
-{/* Semester */}
-           <div className="Field flex flex-col md:flex-row md:gap-6">
-  <label className="w-full md:w-1/3">Semester</label>
-  <select
-    name="semester"
-    value={form.semester}
-    onChange={handleChange}
-    className="w-full md:w-2/3 border border-gray-300 rounded-md p-2"
-  >
-    <option value="">Select Semester</option>
-    <option value="I">I</option>
-    <option value="II">II</option>
-    <option value="III">III</option>
-    <option value="IV">IV</option>
-    <option value="V">V</option>
-    <option value="VI">VI</option>
-    <option value="VII">VII</option>
-    <option value="VIII">VIII</option>
-  </select>
-</div>
-
-
- {/* --- WORK TYPE & TEACHER --- */}
+          {/* --- WORK TYPE & TEACHER --- */}
           <h3 className="section-title text-lg md:text-2xl font-semibold mt-4 md:mt-8">📝 Work Type & Teacher</h3>
           <div className="Field flex flex-col md:flex-row md:gap-6 items-start md:items-center">
             <label className="w-full md:w-1/3">Work Type</label>
@@ -276,7 +268,6 @@ export default function FormUI() {
               </label>
             </div>
           </div>
-
 
           {/* --- EXAMINATION CHECKBOX --- */}
 <h3 className="section-title text-lg md:text-2xl font-semibold mt-4">
@@ -314,7 +305,7 @@ export default function FormUI() {
 </div>
 
 
-<div className="Field flex flex-col md:flex-row md:gap-6">
+          <div className="Field flex flex-col md:flex-row md:gap-6">
             <label className="w-full md:w-1/3">Teacher Name</label>
             <input
               name="teacherName"
@@ -323,32 +314,48 @@ export default function FormUI() {
               className="w-full md:w-2/3 border border-gray-300 rounded-md p-2"
             />
           </div>
-          <div className="flex flex-col md:flex-row gap-6 justify-center mt-10">
 
+          {/* --- BUTTONS --- */}
+          <div className="flex flex-col md:flex-row gap-6 md:gap-12 justify-center mt-6 buttons">
             <button
-              type="button"
               disabled={isFormIncomplete}
-              onClick={openPreviewInNewTab}
-              className={`px-10 py-4 text-white font-bold rounded-2xl shadow-lg ${
-                isFormIncomplete
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
+              type="submit"
+              className={`px-10 py-4 md:px-16 md:py-6 text-white font-bold rounded-2xl shadow-lg 
+                ${
+                  isFormIncomplete
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700 active:scale-95"
+                } min-w-[150px] md:min-w-[180px] transition-all duration-200`}
             >
-              👁️ Generate & Preview PDF →
+              Generate PDF →
             </button>
 
             <button
               onClick={resetForm}
               type="button"
-              className="px-10 py-4 bg-red-600 text-white font-bold rounded-2xl shadow-lg hover:bg-red-700"
+              className="px-10 py-4 md:px-16 md:py-6 bg-red-600 text-white font-bold rounded-2xl shadow-lg hover:bg-red-700 active:scale-95 min-w-[150px] md:min-w-[180px] transition-all duration-200"
             >
               Reset
             </button>
-
           </div>
         </form>
       </div>
+
+      {/* ================= PDF PREVIEW ================= */}
+      {showPDF && (
+        <div className="mt-6">
+          <PDFLayout data={form} />
+          <div className="text-center mt-6 download">
+            <button
+              onClick={generatePDF}
+              className="px-6 py-3 md:px-8 md:py-4 bg-green-600 text-white rounded-xl shadow hover:bg-green-700 transition-all duration-200"
+            >
+              📄 Download PDF
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+

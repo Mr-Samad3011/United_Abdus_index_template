@@ -3,22 +3,30 @@ import './index.css'
 import Form from './components/Form'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import PDFPreview from "./pages/PDFPreview";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      {/* Navbar / Menu Bar */}
-      <Navbar />
+    <Router>
+      <>
+        {/* Navbar */}
+        <Navbar />
 
-      {/* Main Content */}
-      <div className="mt-4">
-        <Form />
-      </div>
+        {/* Routes */}
+        <div className="mt-4">
+          <Routes>
+            <Route path="/" element={<Form />} />
+            <Route path="/preview" element={<PDFPreview />} />
+          </Routes>
+        </div>
 
-<Footer/>
-      
-    </>
+        {/* Footer */}
+        <Footer />
+      </>
+    </Router>
   )
 }
 
-export default App
+export default App;

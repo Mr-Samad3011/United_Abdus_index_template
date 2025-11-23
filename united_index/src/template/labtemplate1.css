@@ -1,10 +1,8 @@
 /* ================= PDF PAGE WRAPPER ================= */
 .pdf-page {
   position: relative;
- 
-   width: 210mm;
-  height: 297mm;
-  page-break-after: always;
+  width: 210mm;
+  min-height: 297mm;
   margin: auto;
   background: white;
   box-sizing: border-box;
@@ -18,14 +16,11 @@
 /* ================= INNER DOUBLE BORDER ================= */
 .double-border {
   position: relative;
-  width: 95%;
-  min-height: 290mm;
+  width: 100%;
+  min-height: 297mm;
   padding: 0 20mm;
   border: 2px double black;
   box-sizing: border-box;
-  left: 20px;
-  top: 10px;
-  
 }
 
 /* ================= PRINT SETTINGS ================= */
@@ -187,7 +182,7 @@ h1, h2, h3, p {
 .index-heading {
   font-size: 35px;
   font-weight: bold;
-  /* margin-top: 20px; */
+  margin-top: 20px;
   text-decoration: underline;
   
 }
@@ -223,6 +218,6 @@ h1, h2, h3, p {
 
 
 .collage-name{
-  font-size: 20px;
+  font-size: 25px;
 }
 

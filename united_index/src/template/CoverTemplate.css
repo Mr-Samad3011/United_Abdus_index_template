@@ -1,0 +1,44 @@
+.cover-wrapper {
+  padding: 10mm;
+}
+
+.cover-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Times New Roman", serif;
+}
+
+.cover-table th,
+.cover-table td {
+  border: 1px solid black;
+  /* padding: 12px; */
+  padding-bottom: 15px;
+  vertical-align: middle;
+}
+
+.cover-title {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.cover-subtitle {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.cover-logo-box {
+  width: 150px;
+  text-align: center;
+}
+
+.cover-logo {
+  width: 250px;
+  height: auto;
+}
+
+.cover-cell {
+  font-size: 20px;
+  font-weight: bold;
+}
