@@ -19,7 +19,7 @@ export default function PDFPreview() {
       orientation: "p",
       unit: "mm",
       format: "a4",
-      compress: true
+      compress: true // ✅ important for reducing size
     });
 
     const pdfWidth = 210;
@@ -30,7 +30,7 @@ export default function PDFPreview() {
       const rect = page.getBoundingClientRect();
 
       const canvas = await html2canvas(page, {
-        scale: 3, // HD quality
+        scale: 3,              // 🔥 Balanced HD (was 3)
         useCORS: true,
         backgroundColor: "#ffffff",
         width: rect.width,
@@ -39,7 +39,8 @@ export default function PDFPreview() {
         scrollY: 0
       });
 
-      const imgData = canvas.toDataURL("image/jpeg", 0.75);
+      // ✅ JPEG gives much smaller size than PNG
+      const imgData = canvas.toDataURL("image/jpeg", 0.75); // quality 75%
 
       if (i !== 0) pdf.addPage();
 
@@ -50,23 +51,8 @@ export default function PDFPreview() {
   };
 
   return (
-    <div
-      style={{
-        padding: "10px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
-      }}
-    >
-      <div
-        id="pdf-content"
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center"
-        }}
-      >
+    <div style={{ padding: "20px" }}>
+      <div id="pdf-content">
 
         <div className="pdf-page">
           <PDFLayout data={data} />

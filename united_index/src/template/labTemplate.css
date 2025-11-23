@@ -15,22 +15,7 @@
   page-break-inside: avoid;
 }
 
-/* ✅ Mobile Fix */
-@media (max-width: 768px) {
-  .pdf-page {
-    width: 100%;
-    height: auto;
-    transform: scale(0.9);
-    transform-origin: top center;
-  }
-}
 
-/* #pdf-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
 
 /* ================= INNER DOUBLE BORDER ================= */
 .double-border {
