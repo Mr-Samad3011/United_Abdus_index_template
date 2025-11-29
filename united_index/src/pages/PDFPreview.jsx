@@ -47,10 +47,11 @@ export default function PDFPreview() {
       pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight, "", "FAST");
     }
 
-    pdf.save(`${data.studentName || "student"}_lab_manual.pdf`);
+    pdf.save(`${data.studentName || "student"}_manual.pdf`);
   };
 
   return (
+
     <div style={{ padding: "20px" }}>
       <div id="pdf-content">
 

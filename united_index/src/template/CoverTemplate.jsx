@@ -1,6 +1,6 @@
 import React from "react";
 import "./CoverTemplate.css";
-
+import AutoFitText from "./AutoFitText";
 // ✅ Function to convert full course name to short form
 const getCourseShort = (course = "") => {
   const map = {
@@ -70,6 +70,8 @@ export default function CoverTemplate({ data = {} }) {
 
           </tbody>
         </table>
+
+        <p className="text-left p-3 font-bold text-2xl">Objective</p>
 
       </div>
     </div>

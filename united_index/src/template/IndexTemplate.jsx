@@ -1,5 +1,6 @@
 import React from "react";
 import "../template/labTemplate.css";
+import AutoFitText from "./AutoFitText";
 
 export default function IndexTemplate({ data }) {
   return (
@@ -9,12 +10,20 @@ export default function IndexTemplate({ data }) {
         {/* ================= TOP LINE ================= */}
         <div className="index-header">
           <h2 className="index-top-line">
-            {data?.selectedCollege}
+           <AutoFitText text={data.selectedCollege} maxSize={28} />
           </h2>
 
           <h2 className="index-top-line collage-name">
-            {data?.subjectName}
-            {data?.subjectCode && ` (${data.subjectCode})`}
+      <AutoFitText
+  text={
+    data?.subjectCode
+      ? `${data.subjectName} (${data.subjectCode})`
+      : data?.subjectName
+  }
+  maxSize={25}
+  minSize={12}
+/>
+
           </h2>
 
           <h1 className="index-heading">INDEX</h1>

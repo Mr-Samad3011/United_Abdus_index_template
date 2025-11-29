@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Form.css";
 
 export default function FormUI() {
-  const [form, setForm] = useState({
+  const [form, setForm,] = useState({
     studentName: "",
     courseName: "",
     subjectName: "",
@@ -17,6 +17,10 @@ export default function FormUI() {
     semester: "",
     internalExam: false,
     externalExam: false,
+    
+  
+  teacherPosition: "",
+  teacherPositionCustom: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -323,6 +327,47 @@ export default function FormUI() {
               className="w-full md:w-2/3 border border-gray-300 rounded-md p-2"
             />
           </div>
+
+    {/* --- TEACHER POSITION / DESIGNATION --- */}
+<div className="Field flex flex-col md:flex-row md:gap-6">
+  <label className="w-full md:w-1/3">Teacher Position / Designation</label>
+
+  <div className="w-full md:w-2/3">
+    <select
+      name="teacherPosition"
+      value={form.teacherPosition}
+      onChange={(e) =>
+        setForm({ ...form, teacherPosition: e.target.value })
+      }
+      className="w-full border border-gray-300 rounded-md p-2"
+    >
+      <option value="">Select Position</option>
+      <option value="Professor">Professor</option>
+      <option value="Associate Professor">Associate Professor</option>
+      <option value="Assistant Professor">Assistant Professor</option>
+      <option value="Lecturer">Lecturer</option>
+      <option value="HOD">HOD</option>
+      <option value="Director">Director</option>
+      <option value="Other">Other (Write manually)</option>
+    </select>
+
+    {/* Custom Input When 'Other' is selected */}
+    {form.teacherPosition === "Other" && (
+      <input
+        type="text"
+        name="teacherPositionCustom"
+        value={form.teacherPositionCustom}
+        onChange={(e) =>
+          setForm({ ...form, teacherPositionCustom: e.target.value })
+        }
+        placeholder="Enter custom designation"
+        className="w-full border border-gray-300 rounded-md p-2 mt-2"
+      />
+    )}
+  </div>
+</div>
+
+
           <div className="flex flex-col md:flex-row gap-6 justify-center mt-10">
 
             <button

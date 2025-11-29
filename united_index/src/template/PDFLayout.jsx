@@ -1,5 +1,6 @@
 import React from "react";
 import "../template/labTemplate.css";
+import AutoFitText from "./AutoFitText";
 
 export default function PDFLayout({ data }) {
   const collegeLogo = "/logounited1.png";
@@ -12,81 +13,72 @@ export default function PDFLayout({ data }) {
 
   const affiliatedLogo = universityLogos[data.affiliatedBy] || "";
 
-  // Exam Checkbox ON/OFF
+  const finalTeacherPosition =
+    data.teacherPosition === "Other"
+      ? data.teacherPositionCustom || ""
+      : data.teacherPosition || "";
+
   const showExam = data.internalExam || data.externalExam;
 
   return (
     <div id="pdf-content" className="pdf-page">
       <div className="double-border">
 
-        {/* ================= COLLEGE LOGO ================= */}
+        {/* College Logo */}
         <div className="logo-container">
           <img src={collegeLogo} alt="College Logo" className="college-logo" />
         </div>
 
-        {/* ================= BASIC DETAILS ================= */}
-        <h2 className="line college-full">{data.selectedCollege}</h2>
+        {/* BASIC DETAILS */}
+        <h2 className="line college-full"> <AutoFitText text={data.selectedCollege} maxSize={28} /></h2>
         <h3 className="line">{data.courseName}</h3>
-        <h3 className="line">{data.subjectName}</h3>
+
+        {/* ⭐ SUBJECT NAME (AUTO FIT APPLY) */}
+        <AutoFitText text={data.subjectName} maxSize={28} />
+
         <h3 className="line">{data.subjectCode}</h3>
 
-        <h1 className="main-title">{data.workType.toUpperCase()}</h1>
+        <h1 className="main-title">{data.workType?.toUpperCase()}</h1>
 
         <h3 className="line">Session {data.session}</h3>
 
-        {/* ================= STUDENT DETAILS ================= */}
+        {/* Student Details */}
         <h2 className="sub-heading">By</h2>
         <p className="line">Name: {data.studentName}</p>
         <p className="line">Roll No: {data.rollNo}</p>
         <p className="line">Student ID: {data.studentId}</p>
 
-        {/* ================= GUIDE ================= */}
+        {/* Guide */}
         <h2 className="sub-heading">Under the guidance of</h2>
-        <p className="line">{data.teacherName}</p>
 
-        {/* ================= FINAL BLOCK (Exam + Logo + Affiliated To) ================= */}
+        {/* ⭐ TEACHER NAME (AUTO FIT APPLY) */}
+        <AutoFitText text={data.teacherName} maxSize={26} />
+
+        {/* Teacher Position */}
+        {finalTeacherPosition && (
+          <p className="line">{finalTeacherPosition}</p>
+        )}
+
+        {/* Bottom Section */}
         <div className={showExam ? "affiliated-row" : "affiliated-center"}>
-
-          {/* ---------- LEFT SIDE: Only when exam checkbox selected ---------- */}
+          
           {showExam && (
             <div className="examinerandlogo">
-
-              {/* Exam names (Internal/External) */}
               <div className="examalign">
-                {data.internalExam && (
-                  <p className="exam-type-box">
-                    Internal Examination: ..................
-                  </p>
-                )}
-
-                {data.externalExam && (
-                  <p className="exam-type-box">
-                    External Examination: ..................
-                  </p>
-                )}
+                {data.internalExam && <p className="exam-type-box">Internal Examination: ..................</p>}
+                {data.externalExam && <p className="exam-type-box">External Examination: ..................</p>}
               </div>
 
-              {/* Small Affiliated Logo (Left Side) */}
               {affiliatedLogo && (
-                <img
-                  src={affiliatedLogo}
-                  alt="University Logo"
-                  className="affiliated-logo-left"
-                />
+                <img src={affiliatedLogo} alt="" className="affiliated-logo-left" />
               )}
             </div>
           )}
 
-          {/* ---------- CENTER BIG LOGO: Only when NO exam selected ---------- */}
           {!showExam && affiliatedLogo && (
-            <img
-              src={affiliatedLogo}
-              alt="University Logo"
-              className="affiliated-logo-center"
-            />
+            <img src={affiliatedLogo} alt="" className="affiliated-logo-center" />
           )}
 
-          {/* ---------- RIGHT SIDE: Affiliated Text ---------- */}
           <div className="affiliated-text-container">
             <h2 className="sub-heading">AFFILIATED TO</h2>
             <p className="line affiliated-full">{data.affiliatedBy}</p>
